@@ -6,26 +6,105 @@
 <title>Sangharsh Adhyeta: Strata-HotRod, Qwen3.8-Flash-Next on an RTX 3060 with 30 GB RAM</title>
 <meta name="description" content="Strata-HotRod runs Qwen3.8-Flash-Next (125B) on one RTX 3060 12 GB with 30 GB of RAM, streaming experts from the SSD, at 50-70 tokens/s.">
 <link rel="canonical" href="https://sangharshadhyeta.github.io/">
+<meta property="og:title" content="Sangharsh Adhyeta: Strata-HotRod">
+<meta property="og:description" content="Qwen3.8-Flash-Next (125B) on one RTX 3060 12 GB with 30 GB of RAM, streaming experts from the SSD, at 50-70 tokens/s.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sangharshadhyeta.github.io/">
+<meta property="og:image" content="https://sangharshadhyeta.github.io/Strata-HotRod/Neon%20Fire%20and%20Ice%20Hot%20Rod%20Logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E">
 <style>
-body{margin:0;background:#0b0d10;color:#e8ebef;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-main{max-width:40rem;margin:0 auto;padding:3rem 1.25rem}
-a{color:#4dabf7}
-h1{font-size:1.8rem;margin:0 0 .3rem}
-.card{background:#14181d;border:1px solid #262c34;border-radius:12px;padding:1rem 1.2rem;margin:1.2rem 0}
-small{color:#9aa4af}
+html{scroll-behavior:smooth;background:#08090b}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+:root{
+  --bg:#08090b;--card:#131519;--card-2:#1a1d23;--border:#24272e;--border-soft:#1c1e24;
+  --fg:#edeef1;--muted:#8b8f98;--muted-2:#5c6068;--fire:#ff6a2b;--ice:#4dabf7;--code-bg:#0e1013;
+  --shine:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,0) 40%);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);margin:0;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:var(--fire);color:#1a0d05}
+a{color:var(--fire);text-decoration:none}
+a:hover{text-decoration:underline}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.05) 1px,transparent 0);background-size:34px 34px;-webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 30%,transparent 75%)}
+.glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.18}
+.g1{width:520px;height:520px;top:-220px;left:50%;transform:translateX(-60%);background:var(--fire)}
+.g2{width:420px;height:420px;top:120px;right:-140px;background:var(--ice);opacity:.12}
+.topnav{position:sticky;top:0;z-index:20;background:rgba(8,9,11,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border-soft)}
+.topnav .in{max-width:960px;margin:0 auto;padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.topnav .brand{font-weight:700;color:var(--fg)}
+.topnav nav{display:flex;gap:1.4rem}
+.topnav nav a{color:var(--muted);font-size:.87rem;font-weight:500}
+.topnav nav a:hover{color:var(--fg);text-decoration:none}
+.wrap{max-width:960px;margin:0 auto;padding:0 1.25rem 5rem}
+.hero{padding:4.5rem 0 2.5rem;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fire);margin-bottom:.9rem}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px var(--fire)}
+h1{font-size:2.8rem;margin:.2rem 0;letter-spacing:-.01em}
+h2{font-size:1.5rem;margin:3rem 0 1rem;letter-spacing:-.01em;scroll-margin-top:4rem}
+.tag{color:var(--muted);font-size:1.1rem;max-width:34rem;margin:.75rem auto 0}
+.project{display:flex;gap:1.5rem;align-items:center;background:var(--card);background-image:var(--shine);border:1px solid var(--border);border-radius:14px;padding:1.3rem 1.4rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 44px -26px rgba(0,0,0,.9)}
+.project img{width:120px;height:120px;border-radius:18px;object-fit:cover;flex:none;border:1px solid var(--border)}
+.project h3{margin:0 0 .3rem;font-size:1.3rem}
+.project p{margin:.4rem 0;color:var(--fg)}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin:.7rem 0}
+.pill{border:1px solid var(--border);background:var(--card-2);color:var(--muted);border-radius:999px;padding:.15rem .7rem;font-size:.8rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.8rem;margin:.9rem 0}
+.stat{background:var(--card-2);border:1px solid var(--border-soft);border-radius:10px;padding:.7rem .9rem}
+.stat b{display:block;font-size:1.35rem;color:var(--fg)}
+.stat span{color:var(--muted);font-size:.82rem}
+.btn{display:inline-block;border:1px solid var(--border);background:var(--card-2);color:var(--fg);border-radius:9px;padding:.45rem .95rem;font-size:.85rem;font-weight:600;margin:.2rem .4rem .2rem 0}
+.btn.primary{background:var(--fire);border-color:var(--fire);color:#1a0d05}
+.btn:hover{text-decoration:none;filter:brightness(1.1)}
+.note{color:var(--muted);font-size:.88rem}
+footer{border-top:1px solid var(--border-soft);margin-top:4rem;padding-top:1.2rem;color:var(--muted-2);font-size:.85rem}
+@media (max-width:640px){.project{flex-direction:column;align-items:flex-start}h1{font-size:2.2rem}.topnav nav a.opt{display:none}}
 </style>
 </head>
 <body>
-<main>
-<h1>Sangharsh Adhyeta</h1>
-<p><small>Projects</small></p>
-<div class="card">
-<h2><a href="https://sangharshadhyeta.github.io/Strata-HotRod/">Strata-HotRod</a></h2>
+<div class="bg"><div class="glow g1"></div><div class="glow g2"></div></div>
+<div class="topnav"><div class="in">
+<a class="brand" href="#top">Sangharsh Adhyeta</a>
+<nav>
+<a href="#projects">Projects</a>
+<a class="opt" href="#measured">Measured</a>
+<a href="https://github.com/sangharshadhyeta">GitHub</a>
+</nav>
+</div></div>
+<div class="wrap" id="top">
+<header class="hero">
+<div class="eyebrow">Open source</div>
+<h1>Big AI models on hardware you own</h1>
+<p class="tag">Running models far bigger than the graphics card, by streaming them from the SSD.</p>
+</header>
+
+<h2 id="projects">Projects</h2>
+<div class="project">
+<img src="Strata-HotRod/Neon%20Fire%20and%20Ice%20Hot%20Rod%20Logo.png" alt="Strata-HotRod logo">
+<div>
+<h3><a href="https://sangharshadhyeta.github.io/Strata-HotRod/">Strata-HotRod</a></h3>
 <p>Qwen3.8-Flash-Next (125B) on one RTX 3060 12 GB with 30 GB of RAM, streaming experts from the SSD, at 50-70 tokens/s.
-A fork of <a href="https://github.com/Niko1221/Strata">Strata</a>. Measured on one PC.</p>
-<p><a href="https://sangharshadhyeta.github.io/Strata-HotRod/">Project page</a> &middot;
-<a href="https://github.com/sangharshadhyeta/Strata-HotRod">GitHub</a></p>
+A fork of <a href="https://github.com/Niko1221/Strata">Strata</a>.</p>
+<div class="pills"><span class="pill">MIT licensed</span><span class="pill">NVIDIA CUDA</span><span class="pill">fork of Strata</span><span class="pill">tested on Linux (Rocky 9)</span></div>
+<a class="btn primary" href="https://sangharshadhyeta.github.io/Strata-HotRod/">Project page</a>
+<a class="btn" href="https://github.com/sangharshadhyeta/Strata-HotRod">GitHub</a>
 </div>
-</main>
+</div>
+
+<h2 id="measured">Measured</h2>
+<div class="stats">
+<div class="stat"><b>78 GB</b><span>model files, on a 12 GB card</span></div>
+<div class="stat"><b>50-70</b><span>tokens/s, Qwen3.8-Flash-Next</span></div>
+<div class="stat"><b>5.2-5.4</b><span>tokens/s, DeepSeek V4.1 (341 GB), same PC</span></div>
+</div>
+<p class="note">All numbers come from one PC: RTX 3060 12 GB, 30 GB RAM, NVMe SSD. Details, the method and what was not tested are on the
+<a href="https://sangharshadhyeta.github.io/Strata-HotRod/">project page</a>.</p>
+
+<footer>Sangharsh Adhyeta &middot; <a href="https://github.com/sangharshadhyeta">github.com/sangharshadhyeta</a></footer>
+</div>
 </body>
 </html>
